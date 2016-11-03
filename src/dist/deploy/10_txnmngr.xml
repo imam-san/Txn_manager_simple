@@ -1,0 +1,79 @@
+<txnmgr name="appMngr" logger="Q2" class="org.jpos.transaction.TransactionManager">
+
+    <property name ="space" value="tspace:App"/>
+    <property name="queue" value="appMngr" />
+    <property name="sessions" value="10" />
+    <property name="debug" value="false" />
+    <property name="call-selector-on-abort" value="true" />
+
+
+    <participant class="TxnManager.TxnOpen" logger="Q2" realm="open">
+        <property name="checkpoint" value="open" />
+        <property name="timeout" value="300" />
+     </participant>
+
+
+    <participant class="TxnManager.TxnSwitch" logger="Q2" realm="Switch">
+        <property name="800.999999" value="GroupEcho TxnPrepareResponde TxnSendResponse "  />
+        <property name="200.000000" value="GroupSale TxnPrepareResponde TxnSendResponse"  />
+        <property name="100.000000" value="GroupInquiry TxnPrepareResponde TxnSendResponse" />
+        <property name="unknown"  value="NotSupported" />
+    </participant>
+
+
+
+    <group name="GroupEcho">
+        <participant class="TxnManager.Group.EchoTest" logger="Q2" realm="Echo Test" >
+            <property name="checkpoint" value="debug"/>
+            <property name="debug" value="true" />
+        </participant>
+    </group>
+
+
+    <group name="GroupSale">
+        <participant class="TxnManager.Group.TxnSale" logger="Q2" realm="Sale" >
+            <property name="checkpoint" value="debug"/>
+            <property name="debug" value="true" />
+        </participant>
+    </group>
+
+    <group name="GroupInquiry">
+        <participant class="TxnManager.Group.TxnInquiry" logger="Q2" realm="Inquiry" >
+            <property name="checkpoint" value="debug"/>
+            <property name="debug" value="true" />
+        </participant>
+    </group>
+
+    <group name="NotSupported">
+        <participant class="TxnManager.Group.NotSupport" logger="Q2" realm="NotSupported" >
+            <property name="checkpoint" value="debug"/>
+            <property name="debug" value="true" />
+        </participant>
+    </group>
+
+
+
+
+    <group name="TxnPrepareResponde">
+        <participant class="TxnManager.Group.TxnPrepareResponse" logger="Q2" realm="Prepare" >
+        <property name="checkpoint" value="debug"/>
+        <property name="debug" value="true" />
+        </participant>
+
+    </group>
+
+    <group name="TxnSendResponse">
+        <participant class="TxnManager.Group.TxnSendResponse" logger="Q2" realm="Respond" >
+            <property name="checkpoint" value="debug"/>
+            <property name="debug" value="true" />
+        </participant>
+    </group>
+
+    <participant class="TxnManager.TxnClose" logger="Q2" realm="close">
+        <property name="checkpoint" value="open" />
+        <property name="timeout" value="300" />
+
+    </participant>
+
+
+</txnmgr>

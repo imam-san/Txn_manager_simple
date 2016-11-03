@@ -1,0 +1,44 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+group = 'org.jpos.SimpleCuii'
+version = '1.1.0'
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {url 'http://download.oracle.com/maven'}
+    maven {url 'http://jline.sourceforge.net/m2repo'}
+    maven {url 'http://jpos.org/maven' }
+    maven {url 'http://repo.maven.apache.org/maven2/'}
+}
+
+dependencies {
+    compile group:'org.jpos', name:'jpos', version:'2.0.1-SNAPSHOT'
+    //compile group :'org.jpos.ee', name : 'jposee-client-simulator', version: '2.0.1-SNAPSHOT'
+
+    compile group :'org.jpos.ee', name :'jposee-txn',       version :'2.0.3-SNAPSHOT'
+    compile group :'org.jpos.ee', name : 'jposee-db-mysql', version: '2.0.3-SNAPSHOT'
+    compile group :'org.jpos.ee', name : 'jposee-dbsupport', version: '2.0.3-SNAPSHOT'
+    compile group :'org.jpos.ee', name : 'jposee-jetty', version: '2.0.6-SNAPSHOT'
+    compile group :'org.jpos.ee', name : 'jposee-freemarker-decorator', version: '2.0.3-SNAPSHOT'
+
+    compile group : 'commons-codec',name :'commons-codec',version :'1.9'
+    compile group : 'commons-logging',name :'commons-logging',version :'1.2'
+    compile group: 'commons-httpclient',name:'commons-httpclient', version :'3.1'
+    compile group :'com.jolbox',name :'bonecp', version :'0.8.0.RELEASE'
+
+    compile group : 'com.google.code.gson',name : 'gson', version: '2.3.1'
+    compile group : 'com.googlecode.json-simple',name : 'json-simple', version: '1.1.1'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    testCompile group:'junit', name:'junit', version:'4.8.2'
+}
+
+apply from: 'jpos-app.gradle'
+
